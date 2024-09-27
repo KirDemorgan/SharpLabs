@@ -84,6 +84,35 @@ class Program
                 p.guessGame();
                 break;
             case 4:
+                Console.WriteLine("\nEnter an array of numbers to test task 2: ");
+                int[] arr = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+                Console.WriteLine("\nEnter a number to find in the array: ");
+                x = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine(p.findLast(arr, x));
+
+                Console.WriteLine("\nEnter an array of numbers to test task 4: ");
+                arr = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+                Console.WriteLine("\nEnter a number to add: ");
+                x = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("\nEnter a position to add the number: ");
+                y = Convert.ToInt32(Console.ReadLine());
+                int[] result = p.add(arr, x, y);
+                Console.WriteLine(string.Join(" ", result));
+
+                Console.WriteLine("\nEnter an array of numbers to test task 6: ");
+                arr = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+                p.reverse(arr);
+
+                Console.WriteLine("\nEnter 2 arrays of numbers to test task 8: ");
+                int[] arr1 = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+                int[] arr2 = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+                result = p.concat(arr1, arr2);
+                Console.WriteLine(string.Join(" ", result));
+
+                Console.WriteLine("\nEnter an array of numbers to test task 10: ");
+                arr = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+                result = p.deleteNegative(arr);
+                Console.WriteLine(string.Join(" ", result));
                 break;
             default:
                 Console.WriteLine("Invalid task number");
@@ -286,5 +315,91 @@ class Program
                     Console.WriteLine("Вы не угадали, введите число от 0 до 9:");
                 }
             }
+        }
+
+        /*========================================================================
+        Задание 4. Массивы
+        ========================================================================*/
+        // 4.2
+        public int findLast(int[] arr, int x)
+        {
+            for (int i = arr.Length - 1; i >= 0; i--)
+            {
+                if (arr[i] == x)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        // 4.4
+        public int[] add(int[] arr, int x, int pos)
+        {
+            int[] newArr = new int[arr.Length + 1];
+            for (int i = 0, j = 0; i < newArr.Length; i++)
+            {
+                if (i == pos)
+                {
+                    newArr[i] = x;
+                }
+                else
+                {
+                    newArr[i] = arr[j];
+                    j++;
+                }
+            }
+            return newArr;
+        }
+
+        // 4.6
+        public void reverse (int[] arr) {
+            int[] reversedArr = new int[arr.Length];
+            for (int i = 0; i < arr.Length; i++)
+            {
+                reversedArr[i] = arr[arr.Length - 1 - i];
+            }
+            Console.WriteLine(string.Join(" ", reversedArr));
+        }
+
+        // 4.8
+        public int[] concat(int[] arr1, int[] arr2)
+        {
+            int[] result = new int[arr1.Length + arr2.Length];
+            for (int i = 0; i < arr1.Length; i++)
+            {
+                result[i] = arr1[i];
+            }
+            for (int i = 0; i < arr2.Length; i++)
+            {
+                result[arr1.Length + i] = arr2[i];
+            }
+            return result;
+        }
+
+        // 4.10
+        public int[] deleteNegative(int[] arr)
+        {
+            int positiveCount = 0;
+            foreach (int num in arr)
+            {
+                if (num > 0)
+                {
+                    positiveCount++;
+                }
+            }
+
+            int[] result = new int[positiveCount];
+            int index = 0;
+
+            foreach (int num in arr)
+            {
+                if (num >= 0)
+                {
+                    result[index++] = num;
+                }
+            }
+
+            return result;
         }
 }
