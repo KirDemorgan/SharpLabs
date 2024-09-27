@@ -7,7 +7,7 @@ class Program
         Program p = new Program();
 
         Console.WriteLine("Lab 1 variant 2");
-        Console.WriteLine("Tasks 2 4 6 8 10\n");
+        Console.WriteLine("Tasks in tasks 2 4 6 8 10\n");
         Console.WriteLine("Enter a task number: ");
 
         int choice = Convert.ToInt32(Console.ReadLine());
@@ -61,9 +61,27 @@ class Program
                 Console.WriteLine("\nEnter a day of the week to test task 10: ");
                 string day = Console.ReadLine();
                 p.printDays(day);
-
                 break;
             case 3:
+                Console.WriteLine("\nEnter a number to test task 2: ");
+                x = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine(p.reverseListNums(x));
+
+                Console.WriteLine("\nEnter 2 numbers to test task 4: ");
+                x = Convert.ToInt32(Console.ReadLine());
+                y = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine(p.pow(x, y));
+
+                Console.WriteLine("\nEnter a number to test task 6: ");
+                x = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine(p.equalNum(x));
+
+                Console.WriteLine("\nEnter a number to test task 8: ");
+                x = Convert.ToInt32(Console.ReadLine());
+                p.leftTriangle(x);
+
+                Console.WriteLine("\nGuess the number from 0 to 9: ");
+                p.guessGame();
                 break;
             case 4:
                 break;
@@ -125,7 +143,7 @@ class Program
 
     /*========================================================================
      Задание 2. Условия
- ========================================================================*/
+    ========================================================================*/
     // 2.2
     public double safeDiv(int x, int y)
     {
@@ -189,4 +207,84 @@ class Program
                 break;
         }
     }
+
+    /*========================================================================
+    Задание 3. Циклы
+    ========================================================================*/
+        // 3.2
+        public String reverseListNums(int x)
+        {
+            string result = x.ToString();
+            while (x > 0)
+            {
+                result += x - 1;
+                x--;
+            }
+            return result;
+        }
+
+        // 3.4
+        public int pow(int x, int y)
+        {
+            int result = 1;
+            for (int j = 0; j < y; j++)
+            {
+                result *= x;
+            }
+            return result;
+        }
+
+        // 3.6
+        public bool equalNum(int x)
+        {
+            int lastDigit = x % 10;
+            while (x > 0)
+            {
+                if (x % 10 != lastDigit)
+                {
+                    return false;
+                }
+                x /= 10;
+            }
+            return true;
+        }
+
+        // 3.8
+        public void leftTriangle(int x)
+        {
+            for (int i = 1; i <= x; i++)
+            {
+                for (int j = 1; j <= i; j++)
+                {
+                    Console.Write("*");
+                }
+                Console.WriteLine();
+            }
+        }
+
+        // 3.10
+        public void guessGame()
+        {
+            Random rnd = new Random();
+
+            bool isGameOver = false;
+            int generatedNumber = rnd.Next(0, 10);
+            int attempts = 0;
+
+            while (!isGameOver)
+            {
+                int userNumber = Convert.ToInt32(Console.ReadLine());
+                attempts++;
+                if (userNumber == generatedNumber)
+                {
+                    Console.WriteLine("Вы угадали!");
+                    Console.WriteLine($"Вы отгадали число за {attempts} попытки");
+                    isGameOver = true;
+                }
+                else
+                {
+                    Console.WriteLine("Вы не угадали, введите число от 0 до 9:");
+                }
+            }
+        }
 }
