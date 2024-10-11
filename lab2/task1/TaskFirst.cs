@@ -161,6 +161,8 @@ public class ElectronicProduct : Product
 
     public void ExtendWarranty(int additionalMonths)
     {
+        if (additionalMonths < 0)
+            throw new ArgumentException("Additional months cannot be negative");
         WarrantyPeriod += additionalMonths;
     }
 
