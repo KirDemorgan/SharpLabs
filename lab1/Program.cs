@@ -159,7 +159,7 @@ class Program
 
     public int lastNumSum(int a, int b)
     {
-        int sum = a + (b%10);
+        int sum = (a%10) + (b%10);
 
         for (int i = 0; i < 3; i++)
         {
