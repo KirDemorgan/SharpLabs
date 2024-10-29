@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfBaggage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Baggage>
+    <Name>Bag1</Name>
+    <Weight>10</Weight>
+  </Baggage>
+  <Baggage>
+    <Name>Bag2</Name>
+    <Weight>20</Weight>
+  </Baggage>
+  <Baggage>
+    <Name>Bag3</Name>
+    <Weight>30</Weight>
+  </Baggage>
+</ArrayOfBaggage>
