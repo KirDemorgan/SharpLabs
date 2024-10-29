@@ -1,5 +1,5 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
+using Lab2;
 
 namespace lab2
 {
@@ -49,10 +49,13 @@ namespace lab2
                 Console.WriteLine($"\nГарантия у eProduct2 до {eProduct2.WarrantyPeriod}. Продлим гарантию для eProduct2 на 12 месяцев");
                 eProduct2.ExtendWarranty(12);
                 Console.WriteLine($"Продленный срок гарантии для eProduct2: {eProduct2.WarrantyPeriod} месяцев");
+                Console.WriteLine(eProduct2.MinField());
 
                 // Бросаем крутое исключение и финал
                 Console.WriteLine("\nТестирование исключений:");
                 ElectronicProduct eProduct3 = new ElectronicProduct(3, 10, -300, "Tablet", "Apple", new DateTime(2022, 1, 1), 36);
+                ElectronicProduct eProduct4 = new ElectronicProduct(3, 10, -300, "Tablet", "Apple", new DateTime(2022, 1, 1), 36);
+
 
             }
             catch (ArgumentException ex)
