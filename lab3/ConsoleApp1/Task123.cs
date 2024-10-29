@@ -73,33 +73,40 @@ public class Task123
     // Метод для заполнения массива по диагоналям
     private void FillTask123()
     {
-        int n = _array.GetLength(0);
+        var n = _array.GetLength(0);
+                 int k = 0, l = n - 1, count = 1;
+                 var direction = true;
 
-        // Заполнение первого ряда
-        for (int j = 0; j < n; j++)
-        {
-            _array[0, j] = n - j;
-        }
+                 while (count < n * (n + 1) / 2)
+                 {
+                     if (direction)
+                     {
+                         while (l <= n - 1)
+                         {
+                             _array[k, l] = count;
+                             l++;
+                             k++;
+                             count++;
+                         }
 
-        // Заполнение остальных рядов
-        for (int i = 1; i < n; i++)
-        {
-            for (int j = 0; j < n; j++)
-            {
-                // Если находимся на диагонали или правее нее
-                if (j >= i)
-                {
-                    // Копируем элемент из предыдущего ряда, но со сдвигом на один влево
-                    // Добавлена проверка на выход за границы массива
-                    _array[i, j] = (j > 0) ? _array[i - 1, j - 1] : 0;
-                }
-                // Иначе заполняем нулем
-                else
-                {
-                    _array[i, j] = 0;
-                }
-            }
-        }
+                         l--;
+                         direction = false;
+                     }
+                     else
+                     {
+                         while (k >= 0)
+                         {
+                             _array[k, l] = count;
+                             l--;
+                             k--;
+                             count++;
+                         }
+
+                         k++;
+                         direction = true;
+                     }
+                 }
+
     }
 
     public int GetBankWithMaxDebt()
