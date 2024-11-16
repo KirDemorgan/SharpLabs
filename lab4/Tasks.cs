@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using System.Text;
+using System.Xml.Serialization;
 
 namespace lab4;
 
@@ -112,9 +113,8 @@ public class Tasks
 
     private static void FifthTaskFileCreate(string filePath, List<(string LastName, string FirstName, int Subject1Score, int Subject2Score)> applicants)
     {
-        XmlSerializer serializer =
-            new XmlSerializer(typeof(List<(string LastName, string FirstName, int Subject1Score, int Subject2Score)>));
-        using (StreamWriter writer = new StreamWriter(filePath))
+        XmlSerializer serializer = new XmlSerializer(typeof(List<(string LastName, string FirstName, int Subject1Score, int Subject2Score)>));
+        using (StreamWriter writer = new StreamWriter(filePath, false, Encoding.UTF8))
         {
             serializer.Serialize(writer, applicants);
         }
