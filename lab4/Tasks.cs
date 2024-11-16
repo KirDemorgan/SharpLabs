@@ -1,4 +1,6 @@
-﻿namespace lab4;
+﻿using System.Xml.Serialization;
+
+namespace lab4;
 
 public class Tasks
 {
@@ -108,6 +110,126 @@ public class Tasks
         }
     }
 
+    private static void FifthTaskFileCreate(string filePath, List<(string LastName, string FirstName, int Subject1Score, int Subject2Score)> applicants)
+    {
+        XmlSerializer serializer =
+            new XmlSerializer(typeof(List<(string LastName, string FirstName, int Subject1Score, int Subject2Score)>));
+        using (StreamWriter writer = new StreamWriter(filePath))
+        {
+            serializer.Serialize(writer, applicants);
+        }
+    }
 
+    private static List<(string LastName, string FirstName, int Subject1Score, int Subject2Score)> FifthTaskFileRead(
+        string filePath)
+    {
+        XmlSerializer serializer =
+            new XmlSerializer(typeof(List<(string LastName, string FirstName, int Subject1Score, int Subject2Score)>));
+        using (StreamReader reader = new StreamReader(filePath))
+        {
+            return (List<(string LastName, string FirstName, int Subject1Score, int Subject2Score)>)serializer
+                .Deserialize(reader) ?? throw new InvalidOperationException("Файл пуст");
+        }
+    }
 
+    private static void ValidateData(string lastName, string firstName, int subject1Score, int subject2Score)
+    {
+        if (lastName.Length == 0 || firstName.Length == 0)
+        {
+            throw new Exception("Фамилия и имя не могут быть пустыми.");
+        }
+
+        if (subject1Score < 0 || subject1Score > 100 || subject2Score < 0 || subject2Score > 100)
+        {
+            throw new Exception("Оценки должны быть в диапазоне от 0 до 100.");
+        }
+
+        if (lastName.Length > 20)
+        {
+            throw new Exception("Фамилия не может быть длиннее 20 символов.");
+        }
+
+        if (firstName.Length > 15)
+        {
+            throw new Exception("Имя не может быть длиннее 15 символов.");
+        }
+    }
+
+    public static void ReadApplicantsFromInput(string filePath)
+    {
+        try
+        {
+            Console.Write("Введите количество абитуриентов: ");
+            int n = int.Parse(Console.ReadLine());
+            if (n > 500)
+            {
+                throw new Exception("Количество абитуриентов не может превышать 500.");
+            }
+
+            var applicants = new List<(string LastName, string FirstName, int Subject1Score, int Subject2Score)>();
+            Console.WriteLine("Введите данные абитуриентов в формате: Фамилия Имя Оценка1 Оценка2");
+
+            for (int i = 0; i < n; i++)
+            {
+                Console.Write($"Введите данные абитуриента {i + 1}: ");
+                string[] input = Console.ReadLine().Split(' ');
+                string lastName = input[0];
+                string firstName = input[1];
+                int subject1Score = int.Parse(input[2]);
+                int subject2Score = int.Parse(input[3]);
+
+                ValidateData(lastName, firstName, subject1Score, subject2Score);
+
+                applicants.Add((lastName, firstName, subject1Score, subject2Score));
+            }
+            FifthTaskFileCreate(filePath, applicants);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            throw;
+        }
+    }
+
+    public static void FifthTask(string filePath)
+    {
+        try
+        {
+            var applicants = FifthTaskFileRead(filePath);
+
+            var failedApplicants = new SortedList<string, string>();
+
+            foreach (var applicant in applicants)
+            {
+                if (applicant.Subject1Score < 30 && applicant.Subject2Score < 30)
+                {
+                    string key = applicant.LastName + " " + applicant.FirstName;
+                    int counter = 1;
+                    while (failedApplicants.ContainsKey(key))
+                    {
+                        key = applicant.LastName + " " + applicant.FirstName + " " + counter;
+                        counter++;
+                    }
+                    failedApplicants.Add(key, applicant.LastName + " " + applicant.FirstName);
+                }
+            }
+
+            if (failedApplicants.Count == 0)
+            {
+                Console.WriteLine("Все абитуриенты допущены к сдаче экзаменов в первом потоке.");
+                return;
+            }
+
+            Console.WriteLine("Абитуриенты, не допущенные к сдаче экзаменов в первом потоке:");
+            foreach (var applicant in failedApplicants.Values)
+            {
+                Console.WriteLine(applicant);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
 }

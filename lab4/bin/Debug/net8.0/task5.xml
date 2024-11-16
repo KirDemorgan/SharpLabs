@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfValueTupleOfStringStringInt32Int32 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ValueTupleOfStringStringInt32Int32>
+    <Item1>а</Item1>
+    <Item2>а</Item2>
+    <Item3>10</Item3>
+    <Item4>10</Item4>
+  </ValueTupleOfStringStringInt32Int32>
+  <ValueTupleOfStringStringInt32Int32>
+    <Item1>б</Item1>
+    <Item2>б</Item2>
+    <Item3>15</Item3>
+    <Item4>15</Item4>
+  </ValueTupleOfStringStringInt32Int32>
+  <ValueTupleOfStringStringInt32Int32>
+    <Item1>я</Item1>
+    <Item2>я</Item2>
+    <Item3>20</Item3>
+    <Item4>20</Item4>
+  </ValueTupleOfStringStringInt32Int32>
+  <ValueTupleOfStringStringInt32Int32>
+    <Item1>в</Item1>
+    <Item2>в</Item2>
+    <Item3>25</Item3>
+    <Item4>25</Item4>
+  </ValueTupleOfStringStringInt32Int32>
+  <ValueTupleOfStringStringInt32Int32>
+    <Item1>а</Item1>
+    <Item2>б</Item2>
+    <Item3>10</Item3>
+    <Item4>10</Item4>
+  </ValueTupleOfStringStringInt32Int32>
+</ArrayOfValueTupleOfStringStringInt32Int32>
