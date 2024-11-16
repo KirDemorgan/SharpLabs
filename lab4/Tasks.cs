@@ -100,13 +100,13 @@ public class Tasks
 
             if (result.Count == 0)
             {
-                Console.WriteLine("Согласные глухие буквы, которые встречаются в более чем одном слове: отсутствуют");
+                Console.WriteLine("Согласные глухие буквы, которые не встречаются в одном слове: отсутствуют");
                 return;
             }
 
             result.Sort();
 
-            Console.WriteLine("Согласные глухие буквы, которые встречаются в более чем одном слове:");
+            Console.WriteLine("Согласные глухие буквы, которые не встречаются в одном слове:");
             foreach (var chr in result)
             {
                 Console.Write(chr + " ");
