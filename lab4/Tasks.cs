@@ -95,7 +95,15 @@ public class Tasks
                 }
             }
 
-            var result = count.Where(k => k.Value != 1).Select(k => k.Key).ToList();
+            // var result = count.Where(k => k.Value != 1).Select(k => k.Key).ToList();
+            var result = count.Where(k => k.Value == words.Length - 1).Select(k => k.Key).ToList();
+
+            if (result.Count == 0)
+            {
+                Console.WriteLine("Согласные глухие буквы, которые встречаются в словах более одного раза: отсутствуют");
+                return;
+            }
+
             result.Sort();
 
             Console.WriteLine("Согласные глухие буквы, которые встречаются в словах более одного раза:");
