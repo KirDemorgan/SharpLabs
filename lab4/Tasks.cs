@@ -169,6 +169,10 @@ public class Tasks
         {
             Console.Write("Введите количество абитуриентов: ");
             int n = int.Parse(Console.ReadLine());
+            if (n < 1)
+            {
+                throw new Exception("Количество абитуриентов не может быть меньше 1.");
+            }
             if (n > 500)
             {
                 throw new Exception("Количество абитуриентов не может превышать 500.");
