@@ -10,7 +10,19 @@ class Program
 
         Console.WriteLine("Task 1");
         List<int> list = new List<int> { 1, 2, 2, 3, 4, 5, 6, 7, 8, 9 };
-        Console.WriteLine("Список чисел:");
+        List<char> list12 = new List<char>{'a', 'b', 'c', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
+        foreach (var i in list12)
+        {
+            Console.Write(i);
+        }
+        Tasks.FirstTask(list12, 'c');
+        Console.WriteLine();
+        foreach (var i in list12)
+        {
+            Console.Write(i);
+        }
+
+        Console.WriteLine();
         foreach (var item in list)
         {
             Console.Write(item + " ");
@@ -47,6 +59,14 @@ class Program
         bool result = Tasks.SecondTask(list2);
 
         Console.WriteLine(result
+            ? "В списке есть элемент равный следующему."
+            : "В списке нет элемента равного следующему.");
+
+        LinkedList<string> list22 = new LinkedList<string>(["a", "b", "c", "d", "e", "a"]);
+
+        bool result2 = Tasks.SecondTask(list22);
+
+        Console.WriteLine(result2
             ? "В списке есть элемент равный следующему."
             : "В списке нет элемента равного следующему.");
 

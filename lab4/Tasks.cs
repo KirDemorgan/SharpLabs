@@ -5,25 +5,25 @@ namespace lab4;
 
 public class Tasks
 {
-    public static void FirstTask(List<int> list, int e)
+    public static void FirstTask<T>(List<T> list, T e) where T : IEquatable<T>
     {
         for (int i = 0; i < list.Count - 1; i++)
         {
-            if (list[i] == e && list[i + 1] != e)
+            if (list[i].Equals(e) && !list[i + 1].Equals(e))
             {
                 list.RemoveAt(i + 1);
             }
         }
     }
 
-    public static bool SecondTask(LinkedList<int> list)
+    public static bool SecondTask<T>(LinkedList<T> list) where T : IEquatable<T>
     {
         if (list.Count == 0 || list.Count == 1)
         {
             return false;
         }
 
-        if (list.First!.Value == list.Last!.Value)
+        if (list.First!.Value.Equals(list.Last!.Value))
         {
             return true;
         }
@@ -31,7 +31,7 @@ public class Tasks
         var currentNode = list.First;
         while (currentNode.Next != null)
         {
-            if (currentNode.Value == currentNode.Next.Value)
+            if (currentNode.Value.Equals(currentNode.Next.Value))
                 return true;
             currentNode = currentNode.Next;
         }
@@ -96,7 +96,16 @@ public class Tasks
             }
 
             // var result = count.Where(k => k.Value != 1).Select(k => k.Key).ToList();
-            var result = count.Where(k => k.Value == words.Length - 1).Select(k => k.Key).ToList();
+            // var result = count.Where(k => k.Value == words.Length - 1).Select(k => k.Key).ToList();
+
+            var result = new HashSet<char>();
+            foreach (var kvp in count)
+            {
+                if (kvp.Value == words.Length - 1)
+                {
+                    result.Add(kvp.Key);
+                }
+            }
 
             if (result.Count == 0)
             {
@@ -104,10 +113,12 @@ public class Tasks
                 return;
             }
 
-            result.Sort();
+            SortedSet<char> sortedSet = new SortedSet<char>(result);
+            HashSet<char> sortedHashSet = new HashSet<char>(sortedSet);
+
 
             Console.WriteLine("Согласные глухие буквы, которые не встречаются в одном слове:");
-            foreach (var chr in result)
+            foreach (var chr in sortedHashSet)
             {
                 Console.Write(chr + " ");
             }
