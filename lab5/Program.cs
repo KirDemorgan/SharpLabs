@@ -87,36 +87,43 @@ class Program
                     dbWorker.DeleteRowById(path, sheetName!, id);
                     break;
                 case "3":
-                    Console.WriteLine("Введите имя листа который будем обновлять: ");
-                    sheetName = Console.ReadLine();
-
-                    while (!sheetNames.Contains(sheetName))
+                    try
                     {
-                        Console.WriteLine("Неверное имя листа. Пожалуйста, введите существующее имя листа: ");
+                        Console.WriteLine("Введите имя листа который будем обновлять: ");
                         sheetName = Console.ReadLine();
-                    }
 
-                    Console.WriteLine("Введите ID строки, которую хотите обновить: ");
-                    idInput = Console.ReadLine();
+                        while (!sheetNames.Contains(sheetName))
+                        {
+                            Console.WriteLine("Неверное имя листа. Пожалуйста, введите существующее имя листа: ");
+                            sheetName = Console.ReadLine();
+                        }
 
-                    while (!int.TryParse(idInput, out id) || id < 0)
-                    {
-                        Console.WriteLine("Неверный ID. Пожалуйста, введите положительное целое число: ");
+                        Console.WriteLine("Введите ID строки, которую хотите обновить: ");
                         idInput = Console.ReadLine();
-                    }
 
-                    var columns = DBWorker.GetColumnCount(path, sheetName!);
-                    List<string> data = new List<string>();
-                    data.Add(idInput);
-                    Console.WriteLine("Введите новые данные для строки: ");
-                    for (int i = 1; i < columns; i++)
+                        while (!int.TryParse(idInput, out id) || id < 0)
+                        {
+                            Console.WriteLine("Неверный ID. Пожалуйста, введите положительное целое число: ");
+                            idInput = Console.ReadLine();
+                        }
+
+                        var columns = DBWorker.GetColumnCount(path, sheetName!);
+                        List<string> data = new List<string>();
+                        data.Add(idInput);
+                        Console.WriteLine("Введите новые данные для строки: ");
+                        for (int i = 1; i < columns; i++)
+                        {
+                            Console.WriteLine($"Введите значение для столбца {i + 1}: ");
+                            userInput = Console.ReadLine();
+                            data.Add(userInput);
+                        }
+                        dbWorker.UpdateRowById(path, sheetName!, id, data);
+                    }
+                    catch (Exception e)
                     {
-                        Console.WriteLine($"Введите значение для столбца {i + 1}: ");
-                        userInput = Console.ReadLine();
-                        data.Add(userInput);
+                        Console.WriteLine($"Ошибка при обновлении строки: {e.Message}");
+                        logger.Error($"Ошибка при обновлении строки: {e.Message}");
                     }
-
-                    dbWorker.UpdateRowById(path, sheetName!, id, data);
                     break;
                 case "4":
                     // Call method to add row
