@@ -42,7 +42,7 @@ class Program
                                Доступный функционал:
                                1. Вывод содержимого базы данных.
                                2. Удаление строки из базы данных.
-                               3. Корректировка строки в базе данных.
+                               3. Обновление строки в базе данных.
                                4. Добавление строки в базу данных.
                                5. //TODO Запрос 1
                                6. //TODO Запрос 2
@@ -105,14 +105,15 @@ class Program
                         idInput = Console.ReadLine();
                     }
 
+                    var columns = DBWorker.GetColumnCount(path, sheetName!);
+                    List<string> data = new List<string>();
+                    data.Add(idInput);
                     Console.WriteLine("Введите новые данные для строки: ");
-                    var data = new List<string>();
-                    var valsAmount = DBWorker.GetColumnCount(path, sheetName!);
-
-                    for (int i = 0; i < valsAmount; i++)
+                    for (int i = 1; i < columns; i++)
                     {
-                        Console.WriteLine($"Введите {i + 1}-е поле: ");
-                        data.Add(Console.ReadLine());
+                        Console.WriteLine($"Введите значение для столбца {i + 1}: ");
+                        userInput = Console.ReadLine();
+                        data.Add(userInput);
                     }
 
                     dbWorker.UpdateRowById(path, sheetName!, id, data);

@@ -152,14 +152,15 @@ public class DBWorker
     {
         try
         {
-            _logger.Info($"Корректировка строки с id {dataId} в листе {sheetName} в файле {path}");
-            Console.WriteLine($"Корректировка строки с id {dataId} в листе {sheetName} в файле {path}");
+            _logger.Info($"Обновление строки с id {dataId} в листе {sheetName} в файле {path}");
+            Console.WriteLine($"Обновление строки с id {dataId} в листе {sheetName} в файле {path}");
 
             using (var workbook = new Workbook(path))
             {
                 var worksheet = workbook.Worksheets[sheetName];
                 var rowToUpdate = worksheet.Cells.Rows
                     .Cast<Row>()
+                    .Skip(1)
                     .FirstOrDefault(row => row.GetCellOrNull(0)?.IntValue == dataId);
 
                 if (rowToUpdate != null)
@@ -184,8 +185,8 @@ public class DBWorker
         }
         catch (Exception e)
         {
-            _logger.Error($"Ошибка при корректировке строки с id {dataId} в листе {sheetName} в файле {path}: {e.Message}");
-            Console.WriteLine($"Ошибка при корректировке строки с id {dataId} в листе {sheetName} в файле {path}: {e.Message}");
+            _logger.Error($"Ошибка при обновлении строки с id {dataId} в листе {sheetName} в файле {path}: {e.Message}");
+            Console.WriteLine($"Ошибка при обновлении строки с id {dataId} в листе {sheetName} в файле {path}: {e.Message}");
         }
     }
 }

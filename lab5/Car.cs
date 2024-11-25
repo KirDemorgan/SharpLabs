@@ -3,22 +3,22 @@
 {
     public class Car
     {
-        private int Id { get; set; }
-        private string Brand { get; set; }
-        private string Model { get; set; }
-        private int Year { get; set; }
+        private int _id;
+        private string _brand;
+        private string _model;
+        private int _year;
 
         public Car(int id, string brand, string model, int year)
         {
-            Id = id;
-            Brand = brand;
-            Model = model;
-            Year = year;
+            _id = id;
+            _brand = brand;
+            _model = model;
+            _year = year;
         }
 
         public override string ToString()
         {
-            return $"Id: {Id}, Brand: {Brand}, Model: {Model}, Year: {Year}";
+            return $"Id: {_id}, Brand: {_brand}, Model: {_model}, Year: {_year}";
         }
     }
 }
