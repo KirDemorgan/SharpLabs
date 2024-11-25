@@ -118,6 +118,7 @@ public class DBWorker
                 _logger.Info($"Строка с id {dataId} успешно удалена из листа {sheetName} в файле {path}");
                 Console.WriteLine($"Строка с id {dataId} успешно удалена из листа {sheetName} в файле {path}");
                 workbook.Save(path);
+                LoadDataFromExcel(path);
             }
         }
         catch (Exception e)
@@ -138,5 +139,53 @@ public class DBWorker
             sheetNames[i] = workbook.Worksheets[i].Name;
         }
         return sheetNames;
+    }
+
+    public static int GetColumnCount(string path, string sheetName)
+    {
+        Workbook workbook = new Workbook(path);
+        Worksheet worksheet = workbook.Worksheets[sheetName];
+        return worksheet.Cells.MaxDataColumn + 1;
+    }
+
+    public void UpdateRowById(string path, string sheetName, int dataId, List<string> data)
+    {
+        try
+        {
+            _logger.Info($"Корректировка строки с id {dataId} в листе {sheetName} в файле {path}");
+            Console.WriteLine($"Корректировка строки с id {dataId} в листе {sheetName} в файле {path}");
+
+            using (var workbook = new Workbook(path))
+            {
+                var worksheet = workbook.Worksheets[sheetName];
+                var rowToUpdate = worksheet.Cells.Rows
+                    .Cast<Row>()
+                    .FirstOrDefault(row => row.GetCellOrNull(0)?.IntValue == dataId);
+
+                if (rowToUpdate != null)
+                {
+                    for (int i = 0; i < data.Count; i++)
+                    {
+                        rowToUpdate.GetCellOrNull(i).PutValue(data[i]);
+                    }
+                }
+                else
+                {
+                    _logger.Warning($"Строка с id {dataId} не найдена в листе {sheetName} в файле {path}");
+                    Console.WriteLine($"Строка с id {dataId} не найдена в листе {sheetName} в файле {path}");
+                    return;
+                }
+
+                _logger.Info($"Строка с id {dataId} успешно изменена в листе {sheetName} в файле {path}");
+                Console.WriteLine($"Строка с id {dataId} успешно изменена в листе {sheetName} в файле {path}");
+                workbook.Save(path);
+                LoadDataFromExcel(path);
+            }
+        }
+        catch (Exception e)
+        {
+            _logger.Error($"Ошибка при корректировке строки с id {dataId} в листе {sheetName} в файле {path}: {e.Message}");
+            Console.WriteLine($"Ошибка при корректировке строки с id {dataId} в листе {sheetName} в файле {path}: {e.Message}");
+        }
     }
 }
