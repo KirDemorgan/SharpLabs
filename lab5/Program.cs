@@ -22,6 +22,7 @@ class Program
 
         bool append = userInput?.ToLower() == "д";
         var logger = new Logger("log.txt", append);
+        logger.Info($"Запуск программы в {DateTime.Now} от пользователя {Environment.UserName} на машине {Environment.MachineName} с OS {Environment.OSVersion} и {Environment.ProcessorCount} ядрами процессора");
 
         var dbWorker = new DBWorker(logger);
 
@@ -126,16 +127,56 @@ class Program
                     }
                     break;
                 case "4":
-                    // Call method to add row
+                    try
+                    {
+                        Console.WriteLine("Введите имя листа в который будем добавлять: ");
+                        sheetName = Console.ReadLine();
+
+                        while (!sheetNames.Contains(sheetName))
+                        {
+                            Console.WriteLine("Неверное имя листа. Пожалуйста, введите существующее имя листа: ");
+                            sheetName = Console.ReadLine();
+                        }
+
+                        var columns = DBWorker.GetColumnCount(path, sheetName!);
+                        List<string> data = new List<string>();
+
+                        Console.WriteLine("Введите новые данные для строки: ");
+                        for (int i = 1; i < columns; i++)
+                        {
+                            Console.WriteLine($"Введите значение для столбца {i + 1}: ");
+                            userInput = Console.ReadLine();
+                            data.Add(userInput);
+                        }
+                        dbWorker.AddRow(path, sheetName!,data);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        throw;
+                    }
                     break;
                 case "5":
-                    // TODO: Implement query 1
+                    // Обращение в 1 таблицу
+                    logger.Info("Инициализация запроса 1");
+                    Console.WriteLine("\nСколько водителей младше 30 лет и со стажем вождения менее 5 лет?");
+                    var drivers = dbWorker.Query1();
+                    Console.WriteLine($"Ответ: {drivers}");
                     break;
                 case "6":
-                    // TODO: Implement query 2
+                    // Обращение в 2 таблицы
+                    logger.Info("Инициализация запроса 2");
+                    Console.WriteLine(
+                        "\nКакое количество рейсов было совершено (началось и закончилось) в 2023 году на автомобилях марки «Toyota», выпущенных после 2005 года?");
+                    var trips = dbWorker.Query2();
+                    Console.WriteLine($"Ответ: {trips}");
                     break;
                 case "7":
-                    // TODO: Implement query 3
+                    // Обращение в 3 таблицы
+                    logger.Info("Инициализация запроса 3");
+                    Console.WriteLine(
+                        "Информация о поездках, где марка автомобиля «Toyota» или «Alfa Romeo» и возраст водителя больше 55 лет.");
+                    dbWorker.Query3();
                     break;
                 case "8":
                     // TODO: Implement query 4

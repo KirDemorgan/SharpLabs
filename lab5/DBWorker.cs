@@ -124,7 +124,8 @@ public class DBWorker
         catch (Exception e)
         {
             _logger.Error($"Ошибка при удалении строки с id {dataId} из листа {sheetName} в файле {path}: {e.Message}");
-            Console.WriteLine($"Ошибка при удалении строки с id {dataId} из листа {sheetName} в файле {path}: {e.Message}");
+            Console.WriteLine(
+                $"Ошибка при удалении строки с id {dataId} из листа {sheetName} в файле {path}: {e.Message}");
         }
     }
 
@@ -138,6 +139,7 @@ public class DBWorker
         {
             sheetNames[i] = workbook.Worksheets[i].Name;
         }
+
         return sheetNames;
     }
 
@@ -185,8 +187,116 @@ public class DBWorker
         }
         catch (Exception e)
         {
-            _logger.Error($"Ошибка при обновлении строки с id {dataId} в листе {sheetName} в файле {path}: {e.Message}");
-            Console.WriteLine($"Ошибка при обновлении строки с id {dataId} в листе {sheetName} в файле {path}: {e.Message}");
+            _logger.Error(
+                $"Ошибка при обновлении строки с id {dataId} в листе {sheetName} в файле {path}: {e.Message}");
+            Console.WriteLine(
+                $"Ошибка при обновлении строки с id {dataId} в листе {sheetName} в файле {path}: {e.Message}");
         }
     }
+
+    public void AddRow(string path, string sheetName, List<string> data)
+    {
+        try
+        {
+            _logger.Info($"Добавление новой строки в лист {sheetName} в файле {path}");
+            Console.WriteLine($"Добавление новой строки в лист {sheetName} в файле {path}");
+
+            using (var workbook = new Workbook(path))
+            {
+                var worksheet = workbook.Worksheets[sheetName];
+                var rows = worksheet.Cells.Rows.Cast<Row>()
+                    .Skip(1)
+                    .ToList();
+
+                int maxId = rows.Max(row => row.GetCellOrNull(0)?.IntValue ?? 0);
+                int newId = maxId + 1;
+
+                int newRowIdx = worksheet.Cells.MaxDataRow + 1;
+                worksheet.Cells[newRowIdx, 0].PutValue(newId);
+
+                for (int i = 1; i < data.Count; i++)
+                {
+                    worksheet.Cells[newRowIdx, i].PutValue(data[i]);
+                }
+
+                _logger.Info($"Новая строка с id {newId} успешно добавлена в лист {sheetName} в файле {path}");
+                Console.WriteLine($"Новая строка с id {newId} успешно добавлена в лист {sheetName} в файле {path}");
+                workbook.Save(path);
+                LoadDataFromExcel(path);
+            }
+        }
+        catch (Exception e)
+        {
+            _logger.Error($"Ошибка при добавлении новой строки в лист {sheetName} в файле {path}: {e.Message}");
+            Console.WriteLine($"Ошибка при добавлении новой строки в лист {sheetName} в файле {path}: {e.Message}");
+        }
+    }
+
+    public int Query1()
+    {
+        // Сколько водителей младше 30 лет и со стажем вождения менее 5 лет?
+        _logger.Info("Сколько водителей младше 30 лет и со стажем вождения менее 5 лет?");
+
+        var youngDriversCount = _drivers
+            .Count(driver => driver.Age < 30 && driver.DrivingExperience < 5);
+        _logger.Info($"Ответ: {youngDriversCount}");
+
+        return youngDriversCount;
+    }
+
+    public int Query2()
+    {
+        // какое количество рейсов было совершено (началось и закончилось) в 2023 году на
+        // автомобилях марки «Toyota», выпущенных после 2005 года? Ответ 7
+
+        // var toyotaIds = _cars
+        //     .Where(car => car.Brand == "Toyota" && car.Year > 2005)
+        //     .Select(car => car.Id)
+        //     .ToList();
+        // var tripsCount = _trips
+        //     .Count(trip => toyotaIds.Contains(trip.CarId) && trip.StartDate.Year == 2023 && trip.EndDate.Year == 2023);
+        _logger.Info("Какое количество рейсов было совершено (началось и закончилось) в 2023 году на автомобилях марки «Toyota», выпущенных после 2005 года?");
+
+        var tripsCount = _trips
+            .Count(trip => _cars
+                               .Any(car => car.Id == trip.CarId && car.Brand.ToLower() == "toyota" && car.Year > 2005)
+                           && trip.StartDate.Year == 2023
+                           && trip.EndDate.Year == 2023);
+
+        _logger.Info($"Ответ: {tripsCount}");
+
+        return tripsCount;
+    }
+
+    public void Query3()
+    {
+        // Вывести информацию о поездках, где марка автомобиля «Toyota» или «Alfa Romeo» и возраст водителя больше 55 лет
+
+        _logger.Info("Информация о поездках, где марка автомобиля «Toyota» или «Alfa Romeo» и возраст водителя больше 55 лет");
+        var result = from trip in _trips
+            join car in _cars on trip.CarId equals car.Id
+            join driver in _drivers on trip.DriverId equals driver.Id
+            where (car.Brand == "Toyota" || car.Brand == "Alfa Romeo") && driver.Age > 55
+            select new
+            {
+                TripId = trip.Id,
+                CarBrand = car.Brand,
+                DriverName = driver.Name,
+                DriverAge = driver.Age,
+                trip.StartDate,
+                trip.EndDate
+            };
+
+        foreach (var trip in result)
+        {
+            Console.WriteLine($"TripId: {trip.TripId}, CarBrand: {trip.CarBrand}, DriverName: {trip.DriverName}, DriverAge: {trip.DriverAge}, StartDate: {trip.StartDate:dd-MM-yyyy}, EndDate: {trip.EndDate:dd-MM-yyyy}");
+            _logger.Info($"TripId: {trip.TripId}, CarBrand: {trip.CarBrand}, DriverName: {trip.DriverName}, DriverAge: {trip.DriverAge}, StartDate: {trip.StartDate:dd-MM-yyyy}, EndDate: {trip.EndDate:dd-MM-yyyy}");
+        }
+    }
+
+    public void Query4()
+    {
+        from trip in _trips
+            join car in _cars on trip.CarId equals car.Id
+            join driver in _drivers on trip.DriverId equals driver.Id
 }

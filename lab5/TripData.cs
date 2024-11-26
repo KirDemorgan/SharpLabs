@@ -3,28 +3,70 @@
 {
     public class TripData
     {
-        private int Id { get; set; }
-        private int CarId { get; set; }
-        private int DriverId { get; set; }
-        private DateTime StartDate { get; set; }
-        private DateTime EndDate { get; set; }
-        private double Distance { get; set; }
-        private decimal Cost { get; set; }
+        private int _id;
+        private int _carId;
+        private int _driverId;
+        private DateTime _startDate;
+        private DateTime _endDate;
+        private double _distance;
+        private decimal _cost;
 
         public TripData(int id, int carId, int driverId, DateTime startDate, DateTime endDate, double distance, decimal cost)
         {
-            Id = id;
-            CarId = carId;
-            DriverId = driverId;
-            StartDate = startDate;
-            EndDate = endDate;
-            Distance = distance;
-            Cost = cost;
+            _id = id;
+            _carId = carId;
+            _driverId = driverId;
+            _startDate = startDate;
+            _endDate = endDate;
+            _distance = distance;
+            _cost = cost;
+        }
+
+        public decimal Cost
+        {
+            get => _cost;
+            set => _cost = value;
+        }
+
+        public double Distance
+        {
+            get => _distance;
+            set => _distance = value;
+        }
+
+        public DateTime EndDate
+        {
+            get => _endDate;
+            set => _endDate = value;
+        }
+
+        public DateTime StartDate
+        {
+            get => _startDate;
+            set => _startDate = value;
+        }
+
+        public int DriverId
+        {
+            get => _driverId;
+            set => _driverId = value;
+        }
+
+        public int CarId
+        {
+            get => _carId;
+            set => _carId = value;
+        }
+
+        public int Id
+        {
+            get => _id;
+            set => _id = value;
         }
 
         public override string ToString()
         {
-            return $"Id: {Id}, CarId: {CarId}, DriverId: {DriverId}, StartDate: {StartDate:dd-MM-yyyy}, EndDate: {EndDate:dd-MM-yyyy}, Distance: {Distance} km, Cost: {Cost} rub";
+            return $"Id: {_id}, CarId: {_carId}, DriverId: {_driverId}, StartDate: {_startDate:dd-MM-yyyy}, EndDate: {_endDate:dd-MM-yyyy}, Distance: {_distance} km, Cost: {_cost} rub";
         }
     }
 }

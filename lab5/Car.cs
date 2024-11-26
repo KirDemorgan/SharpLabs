@@ -16,6 +16,30 @@
             _year = year;
         }
 
+        public int Year
+        {
+            get => _year;
+            set => _year = value;
+        }
+
+        public string Model
+        {
+            get => _model;
+            set => _model = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        public string Brand
+        {
+            get => _brand;
+            set => _brand = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        public int Id
+        {
+            get => _id;
+            set => _id = value;
+        }
+
         public override string ToString()
         {
             return $"Id: {_id}, Brand: {_brand}, Model: {_model}, Year: {_year}";
