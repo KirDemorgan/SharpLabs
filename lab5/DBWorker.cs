@@ -318,7 +318,7 @@ public class DBWorker
             select new
             {
                 DriverName = driverGroup.Key.Name,
-                DrivingExperience = driverGroup.Key.DrivingExperience,
+                driverGroup.Key.DrivingExperience,
                 AverageTripCost = averageCost
             }).Take(5);
 
