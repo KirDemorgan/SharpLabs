@@ -212,9 +212,9 @@ public class DBWorker
                 int newId = maxId + 1;
 
                 int newRowIdx = worksheet.Cells.MaxDataRow + 1;
-                worksheet.Cells[newRowIdx, 0].PutValue(newId);
+                data.Insert(0, newRowIdx.ToString());
 
-                for (int i = 1; i < data.Count; i++)
+                for (int i = 0; i < data.Count; i++)
                 {
                     worksheet.Cells[newRowIdx, i].PutValue(data[i]);
                 }
@@ -255,7 +255,8 @@ public class DBWorker
         //     .ToList();
         // var tripsCount = _trips
         //     .Count(trip => toyotaIds.Contains(trip.CarId) && trip.StartDate.Year == 2023 && trip.EndDate.Year == 2023);
-        _logger.Info("Какое количество рейсов было совершено (началось и закончилось) в 2023 году на автомобилях марки «Toyota», выпущенных после 2005 года?");
+        _logger.Info(
+            "Какое количество рейсов было совершено (началось и закончилось) в 2023 году на автомобилях марки «Toyota», выпущенных после 2005 года?");
 
         var tripsCount = _trips
             .Count(trip => _cars
@@ -272,7 +273,8 @@ public class DBWorker
     {
         // Вывести информацию о поездках, где марка автомобиля «Toyota» или «Alfa Romeo» и возраст водителя больше 55 лет
 
-        _logger.Info("Информация о поездках, где марка автомобиля «Toyota» или «Alfa Romeo» и возраст водителя больше 55 лет");
+        _logger.Info(
+            "Информация о поездках, где марка автомобиля «Toyota» или «Alfa Romeo» и возраст водителя больше 55 лет");
         var result = from trip in _trips
             join car in _cars on trip.CarId equals car.Id
             join driver in _drivers on trip.DriverId equals driver.Id
@@ -289,14 +291,40 @@ public class DBWorker
 
         foreach (var trip in result)
         {
-            Console.WriteLine($"TripId: {trip.TripId}, CarBrand: {trip.CarBrand}, DriverName: {trip.DriverName}, DriverAge: {trip.DriverAge}, StartDate: {trip.StartDate:dd-MM-yyyy}, EndDate: {trip.EndDate:dd-MM-yyyy}");
-            _logger.Info($"TripId: {trip.TripId}, CarBrand: {trip.CarBrand}, DriverName: {trip.DriverName}, DriverAge: {trip.DriverAge}, StartDate: {trip.StartDate:dd-MM-yyyy}, EndDate: {trip.EndDate:dd-MM-yyyy}");
+            Console.WriteLine(
+                $"TripId: {trip.TripId}, CarBrand: {trip.CarBrand}, DriverName: {trip.DriverName}, DriverAge: {trip.DriverAge}, StartDate: {trip.StartDate:dd-MM-yyyy}, EndDate: {trip.EndDate:dd-MM-yyyy}");
+            _logger.Info(
+                $"TripId: {trip.TripId}, CarBrand: {trip.CarBrand}, DriverName: {trip.DriverName}, DriverAge: {trip.DriverAge}, StartDate: {trip.StartDate:dd-MM-yyyy}, EndDate: {trip.EndDate:dd-MM-yyyy}");
         }
     }
 
     public void Query4()
     {
-        from trip in _trips
+        //Найти топ-5 самых опытных водителей (по стажу), которые совершали рейсы на автомобилях,
+        // выпущенных после 2010 года, и при этом средняя стоимость рейсов превышала 5000.
+        var topDrivers = (from trip in _trips
             join car in _cars on trip.CarId equals car.Id
             join driver in _drivers on trip.DriverId equals driver.Id
+            where car.Year > 2010
+            group new
+                {
+                    trip,
+                    driver
+                }
+                by driver into driverGroup
+            let averageCost = driverGroup.Average(x => x.trip.Cost)
+            where averageCost > 5000
+            orderby driverGroup.Key.DrivingExperience descending
+            select new
+            {
+                DriverName = driverGroup.Key.Name,
+                DrivingExperience = driverGroup.Key.DrivingExperience,
+                AverageTripCost = averageCost
+            }).Take(5);
+
+        foreach (var driver in topDrivers)
+        {
+            Console.WriteLine($"DriverName: {driver.DriverName}, DrivingExperience: {driver.DrivingExperience}, AverageTripCost: {driver.AverageTripCost}");
+        }
+    }
 }
