@@ -7,6 +7,7 @@ class Program
     static void Main(string[] args)
     {
         Console.OutputEncoding = Encoding.UTF8;
+        Console.InputEncoding = Encoding.UTF8;
 
         const string path = "LR5-var4.xls";
         string[] sheetNames = DBWorker.GetSheetNames(path);
