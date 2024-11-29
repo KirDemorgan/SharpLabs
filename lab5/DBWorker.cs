@@ -102,6 +102,7 @@ public class DBWorker
                 var worksheet = workbook.Worksheets[sheetName];
                 var rowToDelete = worksheet.Cells.Rows
                     .Cast<Row>()
+                    .Skip(1)
                     .FirstOrDefault(row => row.GetCellOrNull(0)?.IntValue == dataId);
 
                 if (rowToDelete != null)
@@ -176,7 +177,6 @@ public class DBWorker
                 {
                     _logger.Warning($"Строка с id {dataId} не найдена в листе {sheetName} в файле {path}");
                     Console.WriteLine($"Строка с id {dataId} не найдена в листе {sheetName} в файле {path}");
-                    return;
                 }
 
                 _logger.Info($"Строка с id {dataId} успешно изменена в листе {sheetName} в файле {path}");
@@ -208,8 +208,6 @@ public class DBWorker
                     .Skip(1)
                     .ToList();
 
-                int maxId = rows.Max(row => row.GetCellOrNull(0)?.IntValue ?? 0);
-                int newId = maxId + 1;
 
                 int newRowIdx = worksheet.Cells.MaxDataRow + 1;
                 data.Insert(0, newRowIdx.ToString());
@@ -219,8 +217,8 @@ public class DBWorker
                     worksheet.Cells[newRowIdx, i].PutValue(data[i]);
                 }
 
-                _logger.Info($"Новая строка с id {newId} успешно добавлена в лист {sheetName} в файле {path}");
-                Console.WriteLine($"Новая строка с id {newId} успешно добавлена в лист {sheetName} в файле {path}");
+                _logger.Info($"Новая строка с id {data[0]} успешно добавлена в лист {sheetName} в файле {path}");
+                Console.WriteLine($"Новая строка с id {data[0]} успешно добавлена в лист {sheetName} в файле {path}");
                 workbook.Save(path);
                 LoadDataFromExcel(path);
             }

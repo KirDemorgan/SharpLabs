@@ -155,8 +155,8 @@ class Program
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine(e);
-                        throw;
+                        Console.WriteLine($"Ошибка при добавлении строки: {e.Message}");
+                        logger.Error($"Ошибка при добавлении строки: {e.Message}");
                     }
                     break;
                 case "5":
