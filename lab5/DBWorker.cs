@@ -103,7 +103,7 @@ public class DBWorker
                 var rowToDelete = worksheet.Cells.Rows
                     .Cast<Row>()
                     .Skip(1)
-                    .FirstOrDefault(row => row.GetCellOrNull(0)?.IntValue == dataId);
+                    .FirstOrDefault(row => row.GetCellOrNull(0)?.StringValue == dataId.);
 
                 if (rowToDelete != null)
                 {

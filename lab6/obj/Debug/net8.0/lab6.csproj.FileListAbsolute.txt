@@ -1,0 +1,15 @@
+C:\Users\drank\RiderProjects\labsSharp\lab6\bin\Debug\net8.0\lab6.exe
+C:\Users\drank\RiderProjects\labsSharp\lab6\bin\Debug\net8.0\lab6.deps.json
+C:\Users\drank\RiderProjects\labsSharp\lab6\bin\Debug\net8.0\lab6.runtimeconfig.json
+C:\Users\drank\RiderProjects\labsSharp\lab6\bin\Debug\net8.0\lab6.dll
+C:\Users\drank\RiderProjects\labsSharp\lab6\bin\Debug\net8.0\lab6.pdb
+C:\Users\drank\RiderProjects\labsSharp\lab6\obj\Debug\net8.0\lab6.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\drank\RiderProjects\labsSharp\lab6\obj\Debug\net8.0\lab6.AssemblyInfoInputs.cache
+C:\Users\drank\RiderProjects\labsSharp\lab6\obj\Debug\net8.0\lab6.AssemblyInfo.cs
+C:\Users\drank\RiderProjects\labsSharp\lab6\obj\Debug\net8.0\lab6.csproj.CoreCompileInputs.cache
+C:\Users\drank\RiderProjects\labsSharp\lab6\obj\Debug\net8.0\lab6.sourcelink.json
+C:\Users\drank\RiderProjects\labsSharp\lab6\obj\Debug\net8.0\lab6.dll
+C:\Users\drank\RiderProjects\labsSharp\lab6\obj\Debug\net8.0\refint\lab6.dll
+C:\Users\drank\RiderProjects\labsSharp\lab6\obj\Debug\net8.0\lab6.pdb
+C:\Users\drank\RiderProjects\labsSharp\lab6\obj\Debug\net8.0\lab6.genruntimeconfig.cache
+C:\Users\drank\RiderProjects\labsSharp\lab6\obj\Debug\net8.0\ref\lab6.dll
