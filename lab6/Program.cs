@@ -6,6 +6,7 @@ class Program
 {
     static void Main(string[] args)
     {
+        // Задание 1
         // 1 задача
         try
         {
@@ -49,7 +50,7 @@ class Program
             {
                 var meowCounter = (MeowCounter)meowable;
                 var cat = (Cat)meowCounter.Meowable;
-                Console.WriteLine($"{cat.Name} мяукал: {meowCounter.GetMeowCount()}");
+                Console.WriteLine($"{cat.Name} мяукал: {meowCounter.GetMeowCount()} раз");
             }
 
             Console.WriteLine();
@@ -59,7 +60,7 @@ class Program
             {
                 var meowCounter = (MeowCounter)meowable;
                 var cat = (Cat)meowCounter.Meowable;
-                Console.WriteLine($"{cat.Name} мяукал: {meowCounter.GetMeowCount()}");
+                Console.WriteLine($"{cat.Name} мяукал: {meowCounter.GetMeowCount()} раз");
             }
 
             Console.WriteLine();
@@ -69,14 +70,19 @@ class Program
             {
                 var meowCounter = (MeowCounter)meowable;
                 var cat = (Cat)meowCounter.Meowable;
-                Console.WriteLine($"{cat.Name} мяукал: {meowCounter.GetMeowCount()}");
+                Console.WriteLine($"{cat.Name} мяукал: {meowCounter.GetMeowCount()} раз");
             }
 
+            Console.WriteLine();
+            var senya = new MeowCounter(new Cat("Сеня"));
+            senya.Meow(5);
+            Console.WriteLine($"{senya.Meowable} мяукал: {senya.GetMeowCount()} раз");
+            senya.Meow();
+            Console.WriteLine($"{senya.Meowable} мяукал: {senya.GetMeowCount()} раз");
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            Console.WriteLine(e.Message);
         }
     }
 
