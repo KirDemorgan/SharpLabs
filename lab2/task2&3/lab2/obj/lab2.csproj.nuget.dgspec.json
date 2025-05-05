@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\drank\\RiderProjects\\labsSharp\\lab2\\task2&3\\lab2\\lab2.csproj": {}
+    "C:\\Users\\drank\\Source\\Repos\\SharpLabs\\lab2\\task2&3\\lab2\\lab2.csproj": {}
   },
   "projects": {
-    "C:\\Users\\drank\\RiderProjects\\labsSharp\\lab2\\task2&3\\lab2\\lab2.csproj": {
+    "C:\\Users\\drank\\Source\\Repos\\SharpLabs\\lab2\\task2&3\\lab2\\lab2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\drank\\RiderProjects\\labsSharp\\lab2\\task2&3\\lab2\\lab2.csproj",
+        "projectUniqueName": "C:\\Users\\drank\\Source\\Repos\\SharpLabs\\lab2\\task2&3\\lab2\\lab2.csproj",
         "projectName": "lab2",
-        "projectPath": "C:\\Users\\drank\\RiderProjects\\labsSharp\\lab2\\task2&3\\lab2\\lab2.csproj",
+        "projectPath": "C:\\Users\\drank\\Source\\Repos\\SharpLabs\\lab2\\task2&3\\lab2\\lab2.csproj",
         "packagesPath": "C:\\Users\\drank\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\drank\\RiderProjects\\labsSharp\\lab2\\task2&3\\lab2\\obj\\",
+        "outputPath": "C:\\Users\\drank\\Source\\Repos\\SharpLabs\\lab2\\task2&3\\lab2\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -43,7 +43,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net8.0": {
@@ -64,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,5 +1,5 @@
-﻿using System.Text;
-using Lab2;
+﻿using Lab2;
+using System.Text;
 
 namespace lab2
 {
@@ -10,8 +10,7 @@ namespace lab2
             try
             {
                 Console.OutputEncoding = Encoding.UTF8;
-                //Тесты класса Product
-                // Тесты конструкторов Product
+
                 Product product1 = new Product();
                 product1.Id = 1;
                 product1.Amount = 5;
@@ -20,7 +19,6 @@ namespace lab2
                 Product product2 = new Product(2, 10, 100);
                 Product product3 = new Product(product2);
 
-                // Тесты методов Product
                 Console.WriteLine("\nВывод всех объектов Product:");
                 Console.WriteLine($"Product1: {product1}");
                 Console.WriteLine($"Product2: {product2}");
@@ -28,8 +26,7 @@ namespace lab2
                 Console.WriteLine("\nМинимальное значение у полей Product2:");
                 int minForProduct2 = product2.MinField();
 
-                // Тесты класса ElectronicProduct
-                // Тесты конструкторов ElectronicProduct
+
                 ElectronicProduct eProduct1 = new ElectronicProduct();
                 eProduct1.Id = 1;
                 eProduct1.Amount = 5;
@@ -51,12 +48,23 @@ namespace lab2
                 Console.WriteLine($"Продленный срок гарантии для eProduct2: {eProduct2.WarrantyPeriod} месяцев");
                 Console.WriteLine(eProduct2.MinField());
 
-                // Бросаем крутое исключение и финал
+                Console.WriteLine("\nВведите данные для нового электронного продукта:");
+                int id = ReadInt("ID: ", minValue: 1);
+                int amount = ReadInt("Количество: ", minValue: 0);
+                int price = ReadInt("Цена: ", minValue: 0);
+                string name = ReadString("Название: ");
+                string manufacturer = ReadString("Производитель: ");
+                DateTime purchaseDate = ReadDate("Дата покупки (гггг-мм-дд): ");
+                int warrantyPeriod = ReadInt("Гарантийный срок (в месяцах): ", minValue: 0);
+
+                ElectronicProduct userProduct = new ElectronicProduct(id, amount, price, name, manufacturer, purchaseDate, warrantyPeriod);
+                Console.WriteLine("\nСозданный продукт:");
+                Console.WriteLine(userProduct);
+
+
                 Console.WriteLine("\nТестирование исключений:");
                 ElectronicProduct eProduct3 = new ElectronicProduct(3, 10, -300, "Tablet", "Apple", new DateTime(2022, 1, 1), 36);
                 ElectronicProduct eProduct4 = new ElectronicProduct(3, 10, -300, "Tablet", "Apple", new DateTime(2022, 1, 1), 36);
-
-
             }
             catch (ArgumentException ex)
             {
@@ -65,6 +73,49 @@ namespace lab2
             catch (Exception ex)
             {
                 Console.WriteLine($"Получено и обработано исключение: {ex.Message}");
+            }
+        }
+
+        static int ReadInt(string prompt, int minValue = int.MinValue, int maxValue = int.MaxValue)
+        {
+            int value;
+            while (true)
+            {
+                Console.Write(prompt);
+                if (int.TryParse(Console.ReadLine(), out value) && value >= minValue && value <= maxValue)
+                {
+                    return value;
+                }
+                Console.WriteLine($"Введите целое число в диапазоне от {minValue} до {maxValue}.");
+            }
+        }
+
+        static string ReadString(string prompt)
+        {
+            string value;
+            while (true)
+            {
+                Console.Write(prompt);
+                value = Console.ReadLine();
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    return value;
+                }
+                Console.WriteLine("Строка не может быть пустой. Попробуйте снова.");
+            }
+        }
+
+        static DateTime ReadDate(string prompt)
+        {
+            DateTime value;
+            while (true)
+            {
+                Console.Write(prompt);
+                if (DateTime.TryParse(Console.ReadLine(), out value) && value <= DateTime.Now)
+                {
+                    return value;
+                }
+                Console.WriteLine("Введите корректную дату в формате гггг-мм-дд, которая не превышает текущую дату.");
             }
         }
     }
