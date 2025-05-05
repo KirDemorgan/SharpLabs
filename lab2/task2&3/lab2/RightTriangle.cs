@@ -1,4 +1,4 @@
-﻿namespace lab2;
+﻿namespace Lab2;
 
 public class RightTriangle
 {

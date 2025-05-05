@@ -1,36 +1,18 @@
 ﻿using System.Text;
 
-namespace lab2;
-// Задания 2 и 3 решаются в одном проекте (задание 3 продолжает задание 2).
-// В задании 2 необходимо реализовать определение класса (поля, свойства, конструкторы, перегрузка
-// метода ToString() для вывода полей, заданный метод согласно варианту). Протестировать все
-// методы, включая конструкторы (при тестировании методов классов в заданиях не забывайте
-// проверять вводимые пользователем данные на корректность).
-// В задании 3 добавить к реализованному в задании 2 классу указанные в варианте перегруженные
-// операции. Протестировать все методы.
+namespace Lab2;
+
 class Program
 {
     static void Main(string[] args)
     {
         Console.OutputEncoding = Encoding.UTF8;
+
+        double a = GetPositiveDouble("Введите катет a:");
+        double b = GetPositiveDouble("Введите катет b:");
+
         try
         {
-            Console.WriteLine("Введите катет a:");
-            double a = double.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-            while (a <= 0) {
-                Console.WriteLine("Введено неверное значение, попробуйте еще раз");
-                Console.WriteLine("Введите катет a:");
-                a = double.Parse(Console.ReadLine());
-            }
-
-            Console.WriteLine("Введите катет b:");
-            double b = double.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
-            while (b <= 0) {
-                Console.WriteLine("Введено неверное значение, попробуйте еще раз");
-                Console.WriteLine("Введите катет b:");
-                b = double.Parse(Console.ReadLine());
-            }
-
             RightTriangle triangle = new RightTriangle(a, b);
             Console.WriteLine($"\nПлощадь введенного треугольника:  {triangle.CalculateArea()}");
             Console.WriteLine(triangle.ToString());
@@ -57,12 +39,31 @@ class Program
             Console.WriteLine(newTriangle3 <= newTriangle4);
             Console.WriteLine("=>");
             Console.WriteLine(newTriangle3 >= newTriangle4);
-
         }
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
             Console.WriteLine("Введены неверные данные, попробуйте еще раз");
         }
+    }
+
+    static double GetPositiveDouble(string prompt)
+    {
+        double value;
+        while (true)
+        {
+            try
+            {
+                Console.WriteLine(prompt);
+                value = double.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+                if (value > 0) break;
+                Console.WriteLine("Значение должно быть больше 0. Попробуйте снова.");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Ошибка ввода. Попробуйте снова.");
+            }
+        }
+        return value;
     }
 }

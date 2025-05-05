@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\drank\\Source\\Repos\\SharpLabs\\lab2\\task2&3\\lab2\\lab2.csproj": {}
+    "C:\\Users\\drank\\source\\repos\\SharpLabs\\lab2\\task2&3\\lab2\\lab2.csproj": {}
   },
   "projects": {
-    "C:\\Users\\drank\\Source\\Repos\\SharpLabs\\lab2\\task2&3\\lab2\\lab2.csproj": {
+    "C:\\Users\\drank\\source\\repos\\SharpLabs\\lab2\\task2&3\\lab2\\lab2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\drank\\Source\\Repos\\SharpLabs\\lab2\\task2&3\\lab2\\lab2.csproj",
+        "projectUniqueName": "C:\\Users\\drank\\source\\repos\\SharpLabs\\lab2\\task2&3\\lab2\\lab2.csproj",
         "projectName": "lab2",
-        "projectPath": "C:\\Users\\drank\\Source\\Repos\\SharpLabs\\lab2\\task2&3\\lab2\\lab2.csproj",
+        "projectPath": "C:\\Users\\drank\\source\\repos\\SharpLabs\\lab2\\task2&3\\lab2\\lab2.csproj",
         "packagesPath": "C:\\Users\\drank\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\drank\\Source\\Repos\\SharpLabs\\lab2\\task2&3\\lab2\\obj\\",
         "projectStyle": "PackageReference",
